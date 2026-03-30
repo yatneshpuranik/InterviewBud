@@ -4,6 +4,7 @@ import connectDB from "./config/connectDB.js";
 dotenv.config();
 import  authRouter from '../server/route/authRouter.js';
 import userRouter from "./route/userRoute.js";
+import interviewRouter from "./route/interviewRoute.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
@@ -18,6 +19,7 @@ app.use(cookieParser());
 
 app.use('/api/auth',authRouter);
 app.use('/api/user' , userRouter);
+app.use('/api/interview', interviewRouter);
 
 // app.get ("/" , (req , res ) => {
 //     return res.json({message : "Server connected"})
