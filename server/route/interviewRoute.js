@@ -5,6 +5,6 @@ import { analyzeResume } from "../controller/interviewController.js";
 
 const interviewRouter = express.Router();
 
-interviewRouter.get('/resume', isAuth, upload.single('resume'), analyzeResume );
+interviewRouter.post('/resume', isAuth, upload.single('resume'), analyzeResume );
 
 export default interviewRouter ;

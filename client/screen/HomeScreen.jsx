@@ -226,9 +226,10 @@ const HomeScreen = () => {
                   title : "Confidence Analyzer",
                   desc : "Basic tone and voice analysis insight"
                 },
-                { image : "../src/assets/credit.png",
-                  title : "Credits System",
-                  desc : "Unlock premium interview sessions easily"
+                {
+                image : "../src/assets/ai.png",
+                title : "AI Feedback Engine",
+                desc : "Get instant improvement suggestions after each interview"
                 }
               ].map((item , index )=> (
                      <motion.div 

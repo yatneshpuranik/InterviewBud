@@ -10,11 +10,6 @@ const userSchema = new mongoose.Schema({
         type : String,
         require : true ,
         unique : true 
-    },
-    credits :
-    {
-        type : Number,
-        default : 100 
     }
 } , {timestamps: true})
 

@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../redux/userSlice'
+import InterviewScreen from '../screen/InterviewScreen'
   
 const serverUrl = import.meta.env.VITE_SERVER_URL; 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomeScreen/>}/>
         <Route path="/auth" element ={<AuthScreen/>}/>
+        <Route path="/interview" element={<InterviewScreen/>}/>
       </Routes>
     </div>
   )
