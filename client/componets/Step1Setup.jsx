@@ -5,6 +5,7 @@ import axios from 'axios'
 
 const Step1Setup = ({ onStart }) => {
   const [role, setRole] = useState('')
+  const [loading, setLoading] = useState(false);
   const [experience, setExperience] = useState('')
   const [interview, setInterview] = useState("technical")
   const [project, setProject] = useState([])
@@ -40,6 +41,26 @@ const Step1Setup = ({ onStart }) => {
     };
   }, []);
 
+
+
+   const handleStart = async () =>
+   {
+      setLoading(true);
+
+      try { 
+              const result = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/interview/generate-questions`, { role , experience , mode : interview , resumeText , project , skills } , {withCredentials:true
+              })
+              console.log("Generated Questions:", result.data);
+              onStart(result.data);
+              setLoading(false);
+      }
+
+      catch (error) {
+        console.error("Error generating questions:", error.response?.data || error.message);
+        setLoading(false);
+      };
+
+   }
   // ✅ Upload handler (manual only)
   const handleUploadResume = async () => {
     if (!resumeFile || analyzing) return;
@@ -228,10 +249,12 @@ const Step1Setup = ({ onStart }) => {
           )}
 
           <button
-            disabled={!role || !experience}
+            onClick={handleStart}
+            // { ...console.log(role , experience , loading) }
+            disabled={!role || !experience || loading }
             className='w-full bg-green-600 text-white py-3 rounded-xl'
           >
-            Start Interview
+            {loading ? "Generating..." : "Start Interview"}
           </button>
 
         </motion.div>

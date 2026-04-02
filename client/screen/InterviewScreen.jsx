@@ -14,12 +14,12 @@ const InterviewScreen = () => {
             }} />) 
         }
         {
-            step === 2 && ( < Step2Interview  interviewData={interviewData}  onFinish={(report) => {setInterviewData(data) ; 
+            step === 2 && ( < Step2Interview  interviewData={interviewData}  onFinish={(report) => {setInterviewData(report) ; 
                 setStep(3)
             }} />) 
         }
         {
-            step === 1 && ( < Step3Report   
+            step === 3 && ( < Step3Report   
                 report={interviewData}        
                   />) 
         }
