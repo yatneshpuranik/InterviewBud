@@ -16,6 +16,8 @@ export const askAi = async (messages) => {
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
+           "HTTP-Referer": "http://localhost:5173",
+           "X-Title": "InterviewBud",
         },
       }
     );
@@ -30,6 +32,7 @@ export const askAi = async (messages) => {
 
   } catch (error) {
     console.error("open router error", error.response?.data || error.message);
+    console.log("API KEY:", process.env.OPENROUTER_API_KEY);
     throw new Error("Open Router Api Error");
   }
 };

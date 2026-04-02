@@ -7,6 +7,8 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../redux/userSlice'
 import InterviewScreen from '../screen/InterviewScreen'
+import InterviewHistory from '../screen/InterviewHistory'
+import InterviewReport from '../screen/InterviewReport'
   
 const serverUrl = import.meta.env.VITE_SERVER_URL; 
 const App = () => {
@@ -34,6 +36,10 @@ const App = () => {
         <Route path="/" element={<HomeScreen/>}/>
         <Route path="/auth" element ={<AuthScreen/>}/>
         <Route path="/interview" element={<InterviewScreen/>}/>
+        <Route path="/history" element={<InterviewHistory/>}/>
+        <Route path="/report/:id" element={<InterviewReport/>}/>
+        
+
       </Routes>
     </div>
   )

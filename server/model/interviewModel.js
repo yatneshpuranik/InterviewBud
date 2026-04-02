@@ -59,7 +59,7 @@ const interviewSchema = new mongoose.Schema({
 
     },
 
-},{timesetamps:true});
+},{timestamps:true});
 
 
 const Interview = mongoose.model('Interview', interviewSchema);
