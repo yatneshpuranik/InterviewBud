@@ -15,7 +15,7 @@ const InterviewHistory = () => {
     {
         try {
             const result = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/interview/get-interviews` , {withCredentials:true})
-            // console.log(result.data)
+            console.log(result.data)
             setInterviews(result.data)
 
         } catch (error) {
@@ -32,8 +32,9 @@ return (
     <div className='w-[90vw] lg:w-[70vw] max-w-[90%] mx-auto'>
       
       <div className='mb-10 w-full flex items-start gap-4 flex-wrap'>
-        <button className='mt-1 p-3 rounded-full bg-white shadow hover:shadow-md transition'>
-          <FaArrowLeft/>
+        <button  onClick={()=>navigate("/")}
+        className='mt-1 p-3 rounded-full bg-white shadow hover:shadow-md transition'>
+          <FaArrowLeft className='text-gray-600' />
         </button>
 
         <div>
@@ -101,6 +102,7 @@ return (
   }`}
 >
   {item.status}
+  {console.log(item.status)}
 </span>
 
     </div>

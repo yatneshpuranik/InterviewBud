@@ -381,7 +381,9 @@ export const getMyInterviews = async (req , res ) => {
 
 export const getInterviewReport = async (req , res ) => {
   try {
+    // const interview = await Interview.findById(req.params.id)
     const interview = await Interview.findById(req.params.id)
+   .populate("user", "name");
     if (!interview)
     {
       return res.status(400).json ({message : " can  not find interview of user"})
@@ -407,6 +409,8 @@ export const getInterviewReport = async (req , res ) => {
 
     await interview.save();
     return res.status(200).json({
+      userName: interview.user.name,   // ✅ NEW
+      userId : interview.user ,
       finalScore : interview.finalScore,
       confidence : Number(avgConfidence.toFixed(1)),
       communication : Number(avgCommunication.toFixed(1)),

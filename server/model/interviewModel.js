@@ -12,7 +12,7 @@ const questionSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    confindence : {
+    confidence : {
         type: Number,
         default: 0
     },
@@ -29,37 +29,36 @@ const questionSchema = new mongoose.Schema({
 
 
 const interviewSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  role: {
+    type: String,
+    required: true  
+  },
+  experience: {
+    type: String,   
+    required: true
+  },
+  resumeText: {
+    type: String,
+  },
+  questions: [questionSchema],
 
-    user :
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    role : {
-        type: String,
-        required: true  
-    },
-    experience : {
-        type: String,   
-        required: true
-    },
-    resumeText : {
-        type: String,
-    },
-    questions : [questionSchema],
-    finalScore : {
-        type: Number,
-        default: 0,
-        status: {
-            type: String,
-            enum: ['pending', 'completed'],
-            default: 'pending'
-        }
+  finalScore: {
+    type: Number,
+    default: 0,
+  },
 
-    },
+  status: {   
+    type: String,
+    enum: ['pending', 'completed'],
+    default: 'pending'
+  }
 
-},{timestamps:true});
+},{ timestamps:true });
 
 
 const Interview = mongoose.model('Interview', interviewSchema);
