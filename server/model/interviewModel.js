@@ -53,10 +53,14 @@ const interviewSchema = new mongoose.Schema({
   },
 
   status: {   
-    type: String,
-    enum: ['pending', 'completed'],
-    default: 'pending'
-  }
+  type: String,
+  enum: ['pending', 'completed', 'aborted'], 
+  default: 'pending'
+},
+cheatCount: {
+  type: Number,
+  default: 0
+}
 
 },{ timestamps:true });
 

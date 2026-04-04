@@ -27,7 +27,7 @@ const Step1Setup = ({ onStart }) => {
           const file = item.getAsFile();
 
           if (file) {
-            console.log("Pasted file:", file);
+            // console.log("Pasted file:", file);
             setResumeFile(file); // ✅ only set file
           }
         }
@@ -50,7 +50,7 @@ const Step1Setup = ({ onStart }) => {
       try { 
               const result = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/interview/generate-questions`, { role , experience , mode : interview , resumeText , project , skills } , {withCredentials:true
               })
-              console.log("Generated Questions:", result.data);
+              // console.log("Generated Questions:", result.data);
               onStart(result.data);
               setLoading(false);
       }

@@ -12,7 +12,6 @@ export const analyzeResume = async (req, res) => {
 
     const filePath = req.file.path;
 
-    // ❌ Reject non-DOCX
     if (
       req.file.mimetype !==
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -23,22 +22,18 @@ export const analyzeResume = async (req, res) => {
       });
     }
 
-    // 🔥 Extract text from DOCX
     const result = await mammoth.extractRawText({ path: filePath });
 
     let resumeText = result.value;
 
-    // ✅ Clean text
     resumeText = resumeText.replace(/\s+/g, " ").trim();
 
-    console.log("DOCX TEXT:", resumeText);
+    // console.log("DOCX TEXT:", resumeText);
 
-    // ❌ If extraction failed
     if (!resumeText || resumeText.length < 50) {
       throw new Error("Resume text extraction failed (DOCX)");
     }
 
-    // ✅ AI prompt
     const message = [
       {
         role: "system",
@@ -64,7 +59,7 @@ Format:
 
     const getAiResponse = await askAi(message);
 
-    console.log("AI RAW RESPONSE:", getAiResponse);
+    // console.log("AI RAW RESPONSE:", getAiResponse);
 
     let parsed;
 
@@ -77,7 +72,7 @@ Format:
 
       parsed = JSON.parse(cleaned);
     } catch (e) {
-      console.error("JSON parse failed:", getAiResponse);
+      // console.error("JSON parse failed:", getAiResponse);
       throw new Error("Invalid JSON from AI");
     }
 
@@ -230,7 +225,9 @@ export const submitAnswers = async (req, res) => {
       await interview.save();
       return res.json({ feedback: question.feedback });
     }
-
+    if (interview.user.toString() !== req.userId) {
+  return res.status(403).json({ message: "Unauthorized" });
+}
     const messages = [
       {
         role: "system",
@@ -305,17 +302,27 @@ Answer: ${answer}
     console.error(error);
     return res.status(500).json({ message: "Failed to submit answers" });
   }
+
+  
 };
 
 
 export const finishInterview = async (req, res) => {
   try {
-    const { interviewId } = req.body;
+const { interviewId, cheatCount } = req.body;
     const interview = await Interview.findById(interviewId);
 
     if (!interview) {
       return res.status(404).json({ message: "Interview not found" });
     } 
+    if (interview.status === "aborted") {
+  return res.status(400).json({
+    message: "Interview already aborted"
+  });}
+  if (interview.user.toString() !== req.userId) {
+  return res.status(403).json({ message: "Unauthorized" });
+}
+
       
     const totalQuestions = interview.questions.length;
     let totalScore = 0;
@@ -340,6 +347,7 @@ export const finishInterview = async (req, res) => {
 
     interview.finalScore = finalScore;
     interview.status = "completed";
+    interview.cheatCount = cheatCount || 0;
 
     await interview.save();
     return res.status(200).json({
@@ -370,7 +378,7 @@ export const getMyInterviews = async (req , res ) => {
   
 
   try {
-       console.log("USER ID:", req.userId);
+      //  console.log("USER ID:", req.userId);
         const interview = await Interview.find({user : req.userId}).sort({createdAt : - 1 }).select( " role experience mode finalScore status createdAt")
         return res.status(200).json(interview)
   } catch (error) {
@@ -388,7 +396,12 @@ export const getInterviewReport = async (req , res ) => {
     {
       return res.status(400).json ({message : " can  not find interview of user"})
     }
-     
+    if (interview.status === "aborted") {
+  return res.status(200).json({
+    status: "aborted",
+    userName: interview.user.name
+  });
+}
     const totalQuestions = interview.questions.length;
     let totalConfidence = 0 ;
     let totalCorrectness = 0 ;
@@ -409,14 +422,46 @@ export const getInterviewReport = async (req , res ) => {
 
     await interview.save();
     return res.status(200).json({
-      userName: interview.user.name,   // ✅ NEW
-      userId : interview.user ,
-      finalScore : interview.finalScore,
-      confidence : Number(avgConfidence.toFixed(1)),
-      communication : Number(avgCommunication.toFixed(1)),
-      correctness : Number(avgCorrectness.toFixed(1)),  
-      questionWiseScore : interview.questions } )} 
+  userName: interview.user.name,
+  userId: interview.user,
+  finalScore: interview.finalScore,
+  confidence: Number(avgConfidence.toFixed(1)),
+  communication: Number(avgCommunication.toFixed(1)),
+  correctness: Number(avgCorrectness.toFixed(1)),
+  cheatCount: interview.cheatCount, // ✅ FIX HERE
+  questionWiseScore: interview.questions
+}); }
+      
        catch (error) {
     return res.status(500).json({message:`error in finding interview report ${error}`})
   }
 }
+
+
+export const abortInterview = async (req, res) => {
+  try {
+    const { interviewId } = req.body;
+
+    const interview = await Interview.findById(interviewId);
+
+    if (!interview) {
+      return res.status(404).json({ message: "Interview not found" });
+    }
+  if (interview.user.toString() !== req.userId) {
+  return res.status(403).json({ message: "Unauthorized" }); }
+
+    interview.status = "aborted"; // 🔥 main change
+    await interview.save();
+
+    return res.status(200).json({
+      message: "Interview aborted successfully",
+      status: "aborted"
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to abort interview" });
+  }
+ 
+}
+;

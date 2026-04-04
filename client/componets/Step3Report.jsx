@@ -28,6 +28,7 @@ function Step3Report({ report }) {
   let userName = report?.userName
   
   
+  
   const {
     finalScore = 0,
     confidence = 0,
@@ -35,6 +36,7 @@ function Step3Report({ report }) {
     correctness = 0,
     questionWiseScore = [],
   } = report;
+  const { cheatCount = 0 } = report;
 
   const questionScoreData = questionWiseScore.map((score, index) => ({
     name: `Q${index + 1}`,
@@ -65,7 +67,38 @@ function Step3Report({ report }) {
   const score = finalScore;
   const percentage = (score / 10) * 100;
 
-  const downloadPDF = () => {
+
+const downloadPDF = () => {
+  if (report.status === "aborted") {
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(220, 38, 38);
+
+    doc.text("Interview Aborted", 105, 60, { align: "center" });
+
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+
+    doc.text(
+      "This interview was automatically terminated due to suspicious activity.",
+      105,
+      80,
+      { align: "center", maxWidth: 150 }
+    );
+
+    doc.text(
+      "No performance report is available.",
+      105,
+      95,
+      { align: "center" }
+    );
+
+    doc.save(`${report.userName}_Aborted.pdf`);
+    return;
+  }
+
   const doc = new jsPDF();
 
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -73,6 +106,30 @@ function Step3Report({ report }) {
   const contentWidth = pageWidth - margin * 2;
 
   let currentY = 25;
+
+  // ================= PROCTORING =================
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.setTextColor(220, 38, 38);
+
+  doc.text(`Proctoring Alerts: ${cheatCount}`, margin + 10, currentY);
+  currentY += 8;
+
+  let proctorAdvice = "";
+
+  if (cheatCount > 5) {
+    proctorAdvice =
+      "Frequent head movement detected. Maintain focus during interview.";
+  } else {
+    proctorAdvice = "Good focus maintained during interview.";
+  }
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(11);
+  doc.setTextColor(0, 0, 0);
+
+  doc.text(proctorAdvice, margin + 10, currentY);
+  currentY += 12;
 
   // ================= TITLE =================
   doc.setFont("helvetica", "bold");
@@ -88,7 +145,6 @@ function Step3Report({ report }) {
 
   currentY += 5;
 
-  // underline
   doc.setDrawColor(34, 197, 94);
   doc.line(margin, currentY + 2, pageWidth - margin, currentY + 2);
 
@@ -182,12 +238,25 @@ function Step3Report({ report }) {
       fillColor: [249, 250, 251],
     },
   });
-
-  // console.log(userNum)
+  
   doc.save(`${userName}_Interview.pdf`);
 };
+  
+if (report.status === "aborted") {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold text-red-600 mb-4">
+        Interview Aborted
+      </h1>
+      <p className="text-gray-500">
+        Tab switching or suspicious activity detected.
+      </p>
+    </div>
+  );
+}
 
   return (
+    
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-green-50 px sm:px-6 lg:px-10 py-8">
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="md:mb-10 w-full flex items-start gap-4 flex-wrap">

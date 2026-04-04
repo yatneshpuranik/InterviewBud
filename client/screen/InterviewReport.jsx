@@ -14,7 +14,6 @@ function InterviewReport() {
           { withCredentials: true }
         )
 
-        // console.log("REPORT DATA:", result.data)
         setReport(result.data)
       } catch (error) {
         console.error("Error fetching report:", error)
