@@ -23,7 +23,7 @@ function InterviewReport() {
     if (id) fetchReport()
   }, [id])
 
-  // 🔥 Loading UI
+  
   if (!report) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">

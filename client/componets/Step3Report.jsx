@@ -107,7 +107,6 @@ const downloadPDF = () => {
 
   let currentY = 25;
 
-  // ================= PROCTORING =================
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
   doc.setTextColor(220, 38, 38);
@@ -131,7 +130,6 @@ const downloadPDF = () => {
   doc.text(proctorAdvice, margin + 10, currentY);
   currentY += 12;
 
-  // ================= TITLE =================
   doc.setFont("helvetica", "bold");
   doc.setFontSize(20);
   doc.setTextColor(34, 197, 94);
@@ -150,7 +148,6 @@ const downloadPDF = () => {
 
   currentY += 15;
 
-  // ================= FINAL SCORE =================
   doc.setFillColor(240, 253, 244);
   doc.roundedRect(margin, currentY, contentWidth, 20, 4, 4, "F");
 
@@ -166,7 +163,7 @@ const downloadPDF = () => {
 
   currentY += 30;
 
-  // ================= SKILLS =================
+  
   doc.setFillColor(249, 250, 251);
   doc.roundedRect(margin, currentY, contentWidth, 30, 4, 4, "F");
 
@@ -178,7 +175,7 @@ const downloadPDF = () => {
 
   currentY += 45;
 
-  // ================= ADVICE =================
+  
   let advice = "";
 
   if (finalScore >= 8) {
@@ -207,7 +204,7 @@ const downloadPDF = () => {
 
   currentY += 50;
 
-  // ================= TABLE =================
+  
   autoTable(doc, {
     startY: currentY,
     margin: { left: margin, right: margin },
@@ -335,7 +332,7 @@ if (report.status === "aborted") {
                     </span>
                   </div>
 
-                  {/* FIX: move inside */}
+                  
                   <div className="bg-gray-200 h-2 sm:h-3 rounded-full">
                     <div
                       className="bg-green-500 h-full rounded-full"

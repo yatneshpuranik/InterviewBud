@@ -9,8 +9,8 @@ export const askAi = async (messages) => {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openai/gpt-4o-mini", // ✅ fixed
-        messages: messages, // ✅ FIXED (plural)
+        model: "openai/gpt-4o-mini", 
+        messages: messages, 
       },
       {
         headers: {
@@ -22,7 +22,7 @@ export const askAi = async (messages) => {
       }
     );
 
-    const content = response?.data?.choices?.[0]?.message?.content; // ✅ FIXED
+    const content = response?.data?.choices?.[0]?.message?.content; 
 
     if (!content || !content.trim()) {
       throw new Error("Content is empty");

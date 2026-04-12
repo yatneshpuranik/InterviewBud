@@ -15,7 +15,6 @@ const Step1Setup = ({ onStart }) => {
   const [analysisDone, setAnalysisDone] = useState(false)
   const [analyzing, setAnalyzing] = useState(false)
 
-  // ✅ PASTE SUPPORT (NO AUTO UPLOAD)
   useEffect(() => {
     const handlePaste = (e) => {
       const items = e.clipboardData.items;
@@ -28,7 +27,7 @@ const Step1Setup = ({ onStart }) => {
 
           if (file) {
             // console.log("Pasted file:", file);
-            setResumeFile(file); // ✅ only set file
+            setResumeFile(file); 
           }
         }
       }
@@ -61,7 +60,6 @@ const Step1Setup = ({ onStart }) => {
       };
 
    }
-  // ✅ Upload handler (manual only)
   const handleUploadResume = async () => {
     if (!resumeFile || analyzing) return;
 
@@ -118,7 +116,6 @@ const Step1Setup = ({ onStart }) => {
     >
       <div className='w-full max-w-5xl bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] grid md:grid-cols-2 overflow-hidden border border-white/30'>
 
-        {/* LEFT */}
         <motion.div
           initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -151,7 +148,6 @@ const Step1Setup = ({ onStart }) => {
           </div>
         </motion.div>
 
-        {/* RIGHT */}
         <motion.div className='bg-white p-10 space-y-6'>
           <h2 className='text-3xl font-bold'>Ready to Begin?</h2>
 
@@ -180,7 +176,6 @@ const Step1Setup = ({ onStart }) => {
             <option value="hr">HR</option>
           </select>
 
-          {/* Upload */}
           {!analysisDone && (
             <div
               onClick={() => document.getElementById("resumeUpload").click()}
@@ -217,7 +212,6 @@ const Step1Setup = ({ onStart }) => {
             </div>
           )}
 
-          {/* RESULTS */}
           {analysisDone && (
             <div className='bg-gray-50 p-4 rounded-xl space-y-4'>
 

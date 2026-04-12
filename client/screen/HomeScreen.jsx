@@ -24,7 +24,7 @@ const HomeScreen = () => {
           </div>
           
         </div> 
-          {/* Hero Section  */}
+          
           <div  
            className='text-center mb-28'>
             <motion.h1  initial ={{ opacity : 0 , y : 30 }}

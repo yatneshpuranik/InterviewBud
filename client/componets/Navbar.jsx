@@ -38,7 +38,6 @@ const Navbar = () => {
         transition={{ duration: 0.3 }}
         className='w-full max-w-6xl bg-white rounded-[24px] shadow-sm border border-gray-200 px-8 py-4 flex justify-between items-center relative'
       >
-        {/* Logo */}
         <div className="flex items-center gap-3 cursor-pointer">
           <div className='bg-black text-white p-2 rounded-lg'>
             <BsRobot size={18} />
@@ -46,10 +45,8 @@ const Navbar = () => {
           <h1 className='font-semibold hidden md:block text-lg'>InterviewBud</h1>
         </div>
 
-        {/* Right Side */}
         <div className='flex items-center gap-6 relative'>
 
-          {/* User Avatar */}
           <div className='relative'>
             <button
               onClick={() => {
@@ -66,7 +63,6 @@ const Navbar = () => {
                 : <FaUserAstronaut size={16} />}
             </button>
 
-            {/* User Popup */}
             {showUserPopup && (
               <div className='absolute right-0 mt-3 w-48 bg-white shadow-xl border border-gray-200 rounded-xl p-4 z-50'>
                 <p className='text-md text-blue-500 font-medium'>
@@ -92,7 +88,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Auth Modal */}
         {showAuth && <AuthModel onClose={() => setShowAuth(false)} />}
       </motion.div>
     </div>

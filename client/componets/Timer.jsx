@@ -8,7 +8,7 @@ const Timer = ({ timeLeft = 30, totalTime = 60 }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       
-      {/* Outer glow container */}
+    
       <div className="w-28 h-28 p-2 rounded-full bg-emerald-50 shadow-inner">
         
         <CircularProgressbar
@@ -26,7 +26,7 @@ const Timer = ({ timeLeft = 30, totalTime = 60 }) => {
         />
       </div>
 
-      {/* Label */}
+  
       <p className="text-xs text-gray-500">
         Time Remaining
       </p>

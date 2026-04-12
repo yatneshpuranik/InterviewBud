@@ -76,7 +76,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
           setCheatCount((prev) => prev + 1);
         }
       }
-    }, 3000); // 🔥 2 sec → 3 sec (optimized)
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -133,7 +133,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
       utterance.pitch = 1.05;
       utterance.volume = 1;
 
-      // ✅ SAFE DETECTION
+      
       const isFeedbackSpeech = !!feedback && text === feedback;
 
       utterance.onstart = () => {
@@ -250,7 +250,7 @@ const finishInterview = async () => {
       `${import.meta.env.VITE_SERVER_URL}/api/interview/finish`,
       {
         interviewId,
-        cheatCount // ✅ ADD THIS
+        cheatCount 
       },
       { withCredentials: true }
     );
@@ -312,7 +312,6 @@ const finishInterview = async () => {
       setAnswer((prev) => prev + " " + transcript);
     };
 
-    // 🔥 KEY FIX: auto-restart mic
     recognition.onend = () => {
       if (ismicOn && !isAiPlaying) {
         try {
@@ -329,7 +328,6 @@ const finishInterview = async () => {
       try {
         recognitionRef.current.start();
       } catch (e) {
-        // already started ignore
       }
     }
   };
@@ -375,9 +373,8 @@ const finishInterview = async () => {
       setTimeout(async () => {
         await speakText(feedbackText);
 
-        // ✅ CHECK IF LAST QUESTION
         if (currentQuestionIndex + 1 >= questions.length) {
-          finishInterview(); // only here
+          finishInterview(); 
         } else {
           increaseIndex();
         }
@@ -425,7 +422,7 @@ const finishInterview = async () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-6xl min-h-[80vh] bg-white rounded-3xl shadow-2xl border border-gray-200 flex flex-col lg:flex-row overflow-hidden">
-        {/* LEFT */}
+      
         <div className="w-full lg:w-[40%] bg-white flex flex-col items-center p-6 space-y-6 border-r border-gray-200">
           <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-xl relative ">
             <video
@@ -440,7 +437,7 @@ const finishInterview = async () => {
             
           </div>
 
-          {/* subtitle */}
+          
 
           {subtitle && (
             <div className="w-full max-w-md bg-gray-50 border border-gray-200 rounded-xl shadow-sm p-4 ">
@@ -506,7 +503,7 @@ const finishInterview = async () => {
               </div>
             )}
 
-            {/* TEXTAREA (EXPANDS FULL) */}
+            
             <textarea
               placeholder="Type your answer here..."
               onChange={(e) => setAnswer(e.target.value)}
@@ -514,7 +511,7 @@ const finishInterview = async () => {
               className="flex-1 w-full bg-gray-200 p-4 sm:p-6 rounded-2xl resize-none outline-none border border-gray-200 focus:ring-2 focus:ring-emerald-500 transition text-gray-800"
             />
 
-            {/* BUTTONS (STICK TO BOTTOM) */}
+            
             {!feedback ? (
               <div className="flex items-center gap-4 mt-6">
                 <motion.button

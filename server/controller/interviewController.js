@@ -63,7 +63,7 @@ Format:
 
     let parsed;
 
-    // ✅ Safe JSON parsing
+
     try {
       const cleaned = getAiResponse
         .replace(/```json/g, "")
@@ -76,7 +76,6 @@ Format:
       throw new Error("Invalid JSON from AI");
     }
 
-    // 🧹 delete file
     fs.unlinkSync(filePath);
 
     res.json({
@@ -428,7 +427,7 @@ export const getInterviewReport = async (req , res ) => {
   confidence: Number(avgConfidence.toFixed(1)),
   communication: Number(avgCommunication.toFixed(1)),
   correctness: Number(avgCorrectness.toFixed(1)),
-  cheatCount: interview.cheatCount, // ✅ FIX HERE
+  cheatCount: interview.cheatCount, 
   questionWiseScore: interview.questions
 }); }
       
@@ -450,7 +449,7 @@ export const abortInterview = async (req, res) => {
   if (interview.user.toString() !== req.userId) {
   return res.status(403).json({ message: "Unauthorized" }); }
 
-    interview.status = "aborted"; // 🔥 main change
+    interview.status = "aborted";
     await interview.save();
 
     return res.status(200).json({
