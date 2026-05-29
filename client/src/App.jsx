@@ -10,7 +10,7 @@ import InterviewScreen from '../screen/InterviewScreen'
 import InterviewHistory from '../screen/InterviewHistory'
 import InterviewReport from '../screen/InterviewReport'
   
-export const serverUrl = import.meta.env.VITE_SERVER_URL; 
+export const serverUrl = "https://interviewbud.onrender.com/"; 
 const App = () => {
   const dispatch = useDispatch()
 
