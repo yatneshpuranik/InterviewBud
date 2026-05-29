@@ -4,7 +4,7 @@ import {FcGoogle} from "react-icons/fc";
 import { motion }  from "motion/react";
 import {signInWithPopup } from 'firebase/auth';
 import {auth , provider} from '../src/utils/firebase.js';
-// import { serverUrl } from '../src/App.jsx';
+import { serverUrl } from '../src/App.jsx';
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice.js';
@@ -25,7 +25,7 @@ import { setUserData } from '../redux/userSlice.js';
 //         }
         
 //   }
-const serverUrl = import.meta.env.VITE_SERVER_URL;
+// const serverUrl = import.meta.env.VITE_SERVER_URL;
 const AuthScreen = ( { isModel = false } ) => {
   const dispatch = useDispatch();
 

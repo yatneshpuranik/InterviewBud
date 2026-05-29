@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 // import { finishInterview } from '../../server/controller/interviewController';
 import * as faceapi from "face-api.js";
+import { serverUrl } from '../src/App.jsx';
 
 const Step2Interview = ({ interviewData, onFinish }) => {
   const videoUserRef = useRef(null);

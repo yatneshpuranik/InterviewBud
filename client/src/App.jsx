@@ -10,7 +10,7 @@ import InterviewScreen from '../screen/InterviewScreen'
 import InterviewHistory from '../screen/InterviewHistory'
 import InterviewReport from '../screen/InterviewReport'
   
-const serverUrl = import.meta.env.VITE_SERVER_URL; 
+export const serverUrl = import.meta.env.VITE_SERVER_URL; 
 const App = () => {
   const dispatch = useDispatch()
 
@@ -18,10 +18,10 @@ const App = () => {
     const getCurrentUser = async (req , res ) => {
       try {
          const result =  await axios.get(serverUrl+"/api/user/current-user" , {withCredentials : true })
-        //  console.log(result.data)
+      
         dispatch(setUserData(result.data))
       } catch (error) {
-        // console.log(` error in getting current user is ${error} `)
+        
                 dispatch(setUserData(null))
 
       } 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from "axios"
 import Step3Report from '../componets/Step3Report'
+import { serverUrl } from '../src/App.jsx';
 
 function InterviewReport() {
   const { id } = useParams()
@@ -10,7 +11,7 @@ function InterviewReport() {
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const result = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/interview/report/${id}`,
+        const result = await axios.get(`${serverUrl}/api/interview/report/${id}`,
           { withCredentials: true }
         )
 

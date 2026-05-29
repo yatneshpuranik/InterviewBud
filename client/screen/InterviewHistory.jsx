@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
+import { serverUrl } from '../src/App.jsx';
 
 const InterviewHistory = () => {
   const [interviews, setInterviews] = useState([]);
@@ -11,7 +12,7 @@ const InterviewHistory = () => {
     const getMyInterviews = async () => {
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/api/interview/get-interviews`,
+          `${serverUrl}/api/interview/get-interviews`,
           { withCredentials: true },
         );
         setInterviews(result.data);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { FaUserTie, FaChartLine, FaMicrophoneAlt, FaFileUpload } from 'react-icons/fa'
 import axios from 'axios'
+import { serverUrl } from '../src/App.jsx';
 
 const Step1Setup = ({ onStart }) => {
   const [role, setRole] = useState('')
@@ -47,7 +48,7 @@ const Step1Setup = ({ onStart }) => {
       setLoading(true);
 
       try { 
-              const result = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/interview/generate-questions`, { role , experience , mode : interview , resumeText , project , skills } , {withCredentials:true
+              const result = await axios.post(`${serverUrl}/api/interview/generate-questions`, { role , experience , mode : interview , resumeText , project , skills } , {withCredentials:true
               })
               // console.log("Generated Questions:", result.data);
               onStart(result.data);
@@ -70,7 +71,7 @@ const Step1Setup = ({ onStart }) => {
 
     try {
       const result = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/interview/resume`,
+        `${serverUrl}/api/interview/resume`,
         formData,
         { withCredentials: true }
       );
